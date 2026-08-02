@@ -1,11 +1,10 @@
+import "dotenv/config";
 import express from "express";
-import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
 // import routes
 import movieRoutes from "./routes/movieRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
-config(); // Load environment variables
 connectDB();
 
 const app = express();
