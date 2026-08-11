@@ -19,7 +19,7 @@ model User {
   createdAt DateTime @default(now())
 
   movies         Movie[]         @relation("MovieCreator")
-  watchlistItems WatchListItem[]
+  watchlistItems WatchlistItem[]
 }
 
 model Movie {
@@ -34,14 +34,14 @@ model Movie {
   createdAt   DateTime @default(now())
 
   creator        User            @relation("MovieCreator", fields: [createdBy], references: [id], onDelete: Cascade)
-  watchlistItems WatchListItem[]
+  watchlistItems WatchlistItem[]
 }
 
-model WatchListItem {
+model WatchlistItem {
   id        String          @id @default(uuid())
   userId    String
   movieId   String
-  status    WatchListStatus @default(PLANNED)
+  status    WatchlistStatus @default(PLANNED)
   rating    Int?
   notes     String?
   createdAt DateTime        @default(now())
@@ -50,9 +50,11 @@ model WatchListItem {
   // relations
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
 }
 
-enum WatchListStatus {
+enum WatchlistStatus {
   PLANNED
   WATCHING
   COMPLETED
