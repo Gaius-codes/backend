@@ -5,14 +5,16 @@ import { prisma } from "../config/db.js";
 // check if token is valid
 const authMiddleware = async (req, res, next) => {
   console.log("authMiddleware called");
+  console.log("Cookies:", req.cookies);
+  console.log("Authorization:", req.headers.authorization);
   let token;
 
   if (
-    req.headerrs.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer ")
   ) {
     token = req.headers.authorization.split(" ")[1];
-  } else if (req.cookies.jwt) {
+  } else if (req.cookies?.jwt) {
     token = req.cookies.jwt;
   }
 
