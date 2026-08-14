@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import { connectDB, disconnectDB } from "./config/db.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 // import routes
 import movieRoutes from "./routes/movieRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -21,6 +22,8 @@ app.use(cookieParser());
 app.use("/movies", movieRoutes);
 app.use("/auth", authRoutes);
 app.use("/watchlist", watchlistRoutes);
+
+app.use(notFound);
 
 const PORT = 5001;
 
